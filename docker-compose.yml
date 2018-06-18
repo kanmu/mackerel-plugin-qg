@@ -1,0 +1,20 @@
+---
+version: "3"
+services:
+  main:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      PGHOST: postgres
+      PGUSER: postgres
+      PGDATABASE: postgres
+    volumes:
+      - .:/go/src/github.com/kanmu/mackerel-plugin-qg
+    links:
+      - postgres:db
+    entrypoint: ['go', 'test', 'github.com/kanmu/mackerel-plugin-qg/...']
+  postgres:
+    build:
+      context: .
+      dockerfile: Dockerfile-postgres
