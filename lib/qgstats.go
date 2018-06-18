@@ -141,10 +141,10 @@ func (q QgPlugin) FetchMetrics() (map[string]interface{}, error) {
 	stat := q.aggregateStats(stats)
 
 	return map[string]interface{}{
-		"count_total":         stat.Count,
-		"count_working":       stat.CountWorking,
-		"count_errored":       stat.CountErrored,
-		"highest_error_count": stat.HighestErrorCount,
+		"count_total":         uint64(stat.Count),
+		"count_working":       uint64(stat.CountWorking),
+		"count_errored":       uint64(stat.CountErrored),
+		"highest_error_count": uint64(stat.HighestErrorCount),
 	}, nil
 }
 
@@ -157,16 +157,16 @@ func (p QgPlugin) GraphDefinition() map[string]mp.Graphs {
 			Label: (labelPrefix + " Jobs"),
 			Unit:  "integer",
 			Metrics: []mp.Metrics{
-				{Name: "count_total", Label: "Total jobs", Diff: false, Stacked: false},
-				{Name: "count_working", Label: "Jobs being processed", Diff: false, Stacked: false},
+				{Name: "count_total", Label: "Total jobs", Type: "uint64", Diff: false, Stacked: false},
+				{Name: "count_working", Label: "Jobs being processed", Type: "uint64", Diff: false, Stacked: false},
 			},
 		},
 		"errors": {
 			Label: (labelPrefix + " Errors"),
 			Unit:  "integer",
 			Metrics: []mp.Metrics{
-				{Name: "count_errored", Label: "Job failure count", Diff: false, Stacked: false},
-				{Name: "highest_error_count", Label: "Highest error count", Diff: false, Stacked: false},
+				{Name: "count_errored", Label: "Job failure count", Type: "uint64", Diff: false, Stacked: false},
+				{Name: "highest_error_count", Label: "Highest error count", Type: "uint64", Diff: false, Stacked: false},
 			},
 		},
 	}
